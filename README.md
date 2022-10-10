@@ -27,7 +27,7 @@ To test it, add messages to the queue using the Service Bus web explorer. When t
 
 The log level can be set in the `logback.xml` file.
 
-#### Code snippet: create a Service Bus instance
+### Code snippet: create a Service Bus instance
 
 Shorthand commands to create a Service Bus namespace and get the root connection string:
 

@@ -26,7 +26,11 @@ mvn install
 mvn exec:java
 ```
 
-To test it, add 1,000 messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages. Restarting solves the issue temporarily until the queue locks again.
+I was able to simulate it with various combinations, this is one is currently set up in the code:
+- Prefetch count: `100`
+- Max concurrent calls: `100`
+
+To test it, add 10,000 messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages. Restarting solves the issue temporarily until the queue locks again.
 
 Several errors will be thrown by the processor, such as these:
 

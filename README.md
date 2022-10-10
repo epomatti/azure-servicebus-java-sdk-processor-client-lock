@@ -16,7 +16,7 @@ Set an environment variable with your connection string:
 
 ```sh
 export CONNECTION_STRING="Endpoint=sb://{NAMESPACE_NAME}.servicebus.windows.net/;SharedAccessKeyName={KEY_NAME};SharedAccessKey={ACCESS_KEY}="
-export QUEUE_NAME="demoQueue"
+export QUEUE_NAME="demoqueue"
 ```
 
 Start the app by running Maven or on your favorite IDE:
@@ -28,8 +28,8 @@ mvn exec:java
 
 I was able to simulate it with various combinations. This is the one currently set up in the code:
 
-- Prefetch count: `100`
-- Max concurrent calls: `100`
+- Prefetch count: `50`
+- Max concurrent calls: `10`
 
 To test it, add 10,000 messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages. Restarting solves the issue temporarily until the queue locks again.
 
@@ -82,8 +82,8 @@ group="rg-demo"
 namespace="bus-<YOUR NAMESPACE NAME>"
 
 az group create -n $group -l $location
-az servicebus namespace create -n $namespace -g $group -l $location
-az servicebus queue create -n "demoQueue" --namespace-name $namespace -g $group --enable-partitioning
+az servicebus namespace create --sku "Standard" -n $namespace -g $group -l $location
+az servicebus queue create -n "demoqueue" --namespace-name $namespace -g $group --enable-partitioning
 
 az servicebus namespace authorization-rule keys list -g $group --namespace-name $namespace --name "RootManageSharedAccessKey" --query "primaryConnectionString" -o tsv
 ```

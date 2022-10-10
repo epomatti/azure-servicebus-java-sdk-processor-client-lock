@@ -29,6 +29,31 @@ To test it, add messages to the queue using the Service Bus web explorer. When t
 
 The log level can be set in the `logback.xml` file.
 
+## Environment
+
+Here are my specific versions when running my local tests:
+
+```sh
+$ java --version
+openjdk 17.0.4 2022-07-19
+OpenJDK Runtime Environment (build 17.0.4+8-Ubuntu-122.04)
+OpenJDK 64-Bit Server VM (build 17.0.4+8-Ubuntu-122.04, mixed mode, sharing)
+
+$ mvn --version
+Apache Maven 3.8.6 (84538c9988a25aec085021c365c560670ad80f63)
+Maven home: /usr/share/maven
+Java version: 17.0.4, vendor: Private Build, runtime: /usr/lib/jvm/java-17-openjdk-amd64
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "5.10.102.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
+
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.1 LTS
+Release:        22.04
+Codename:       jammy
+```
+
 ## Code snippet: create a Service Bus instance
 
 Shorthand commands to create a Service Bus namespace and get the root connection string:

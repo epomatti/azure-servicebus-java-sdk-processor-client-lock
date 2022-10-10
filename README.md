@@ -26,9 +26,28 @@ mvn install
 mvn exec:java
 ```
 
-To test it, add messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages.
+To test it, add 1,000 messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages. Restarting solves the issue temporarily until the queue locks again.
 
 The log level can be set in the `logback.xml` file.
+
+```none
+18:21:10.143 [boundedElastic-2] INFO  c.a.m.s.i.ServiceBusReceiveLinkProcessor - {"az.sdk.message":"Adding credits.","prefetch":10,"requested":2,"linkCredits":0,"expectedTotalCredit":10,"queuedMessages":0,"creditsToAdd":10,"messageQueueSize":0}
+18:21:10.145 [boundedElastic-2] INFO  com.example.App - Message payload received: Test message
+18:21:10.516 [boundedElastic-2] INFO  c.a.m.s.i.ServiceBusReceiveLinkProcessor - {"az.sdk.message":"Adding credits.","prefetch":10,"requested":2,"linkCredits":0,"expectedTotalCredit":10,"queuedMessages":1,"creditsToAdd":9,"messageQueueSize":0}
+18:21:10.516 [boundedElastic-2] INFO  c.a.m.s.i.ServiceBusReceiveLinkProcessor - {"az.sdk.message":"Adding credits.","prefetch":10,"requested":2,"linkCredits":0,"expectedTotalCredit":10,"queuedMessages":0,"creditsToAdd":10,"messageQueueSize":0}
+18:21:10.518 [boundedElastic-2] INFO  com.example.App - Message payload received: Test message
+18:21:56.509 [parallel-4] INFO  c.a.m.s.LockRenewalOperation - {"az.sdk.message":"Starting lock renewal.","isSession":false,"lockToken":"20b2e3b2-7d1b-46ad-a739-319a7b8b0051"}
+18:21:56.511 [parallel-4] INFO  c.a.m.s.i.ServiceBusReactorAmqpConnection - {"az.sdk.message":"Creating management node.","linkName":"demoQueue-mgmt","entityPath":"demoQueue","address":"demoQueue/$management"}
+18:21:56.643 [reactor-executor-1] INFO  c.a.c.a.i.handler.SessionHandler - {"az.sdk.message":"onSessionRemoteOpen","connectionId":"MF_72f731_1665436756481","sessionName":"demoQueue-mgmt-session","sessionIncCapacity":0,"sessionOutgoingWindow":2147483647}
+18:21:56.644 [reactor-executor-1] INFO  c.a.c.a.i.ReactorConnection - {"az.sdk.message":"Emitting new response channel.","connectionId":"MF_72f731_1665436756481","entityPath":"demoQueue/$management","linkName":"demoQueue-mgmt"}
+18:21:56.644 [reactor-executor-1] INFO  c.a.c.a.i.AmqpChannelProcessor - {"az.sdk.message":"Setting next AMQP channel.","connectionId":"MF_72f731_1665436756481","entityPath":"demoQueue/$management"}
+18:21:56.646 [reactor-executor-1] INFO  c.a.c.a.i.ActiveClientTokenManager - {"az.sdk.message":"Scheduling refresh token task.","scopes":"amqp://bus-demo12345.servicebus.windows.net/demoQueue"}
+18:21:56.772 [reactor-executor-1] INFO  c.a.c.a.i.handler.SendLinkHandler - {"az.sdk.message":"onLinkRemoteOpen","connectionId":"MF_72f731_1665436756481","linkName":"demoQueue-mgmt:sender","entityPath":"demoQueue/$management","remoteTarget":"Target{address='demoQueue/$management', durable=NONE, expiryPolicy=SESSION_END, timeout=0, dynamic=false, dynamicNodeProperties=null, capabilities=null}"}
+18:21:56.772 [reactor-executor-1] INFO  c.a.c.a.i.AmqpChannelProcessor - {"az.sdk.message":"Channel is now active.","connectionId":"MF_72f731_1665436756481","entityPath":"demoQueue/$management"}
+18:21:56.772 [reactor-executor-1] INFO  c.a.c.a.i.handler.ReceiveLinkHandler - {"az.sdk.message":"onLinkRemoteOpen","connectionId":"MF_72f731_1665436756481","entityPath":"demoQueue/$management","linkName":"demoQueue-mgmt:receiver","remoteSource":"Source{address='demoQueue/$management', durable=NONE, expiryPolicy=SESSION_END, timeout=0, dynamic=false, dynamicNodeProperties=null, distributionMode=null, filter=null, defaultOutcome=null, outcomes=null, capabilities=null}"}
+18:21:57.337 [reactor-executor-1] WARN  c.a.m.s.i.ManagementChannel - {"az.sdk.message":"Operation not successful.","entityPath":"demoQueue","status":"GONE","description":"The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue. For more information please see https://aka.ms/ServiceBusExceptions . Reference:b5b66653-9cbe-4f34-8c6d-12ed014281cd, TrackingId:94cf0350-7a2e-40aa-9a42-4cff21187c15_B7, SystemTracker:bus-demo12345:queue:demoqueue~95, Timestamp:2022-10-10T21:21:58","condition":"com.microsoft:message-lock-lost"}
+18:21:57.341 [reactor-executor-1] ERROR c.a.m.s.LockRenewalOperation - {"az.sdk.message":"Error occurred while renewing lock token.","exception":"The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue. For more information please see https://aka.ms/ServiceBusExceptions . Reference:b5b66653-9cbe-4f34-8c6d-12ed014281cd, TrackingId:94cf0350-7a2e-40aa-9a42-4cff21187c15_B7, SystemTracker:bus-demo12345:queue:demoqueue~95, Timestamp:2022-10-10T21:21:58, errorContext[NAMESPACE: bus-demo12345.servicebus.windows.net. ERROR CONTEXT: N/A, PATH: demoQueue/$management, REFERENCE_ID: demoQueue-mgmt:receiver, LINK_CREDIT: 0]","isSession":false,"lockToken":"20b2e3b2-7d1b-46ad-a739-319a7b8b0051"}
+```
 
 ## Environment
 

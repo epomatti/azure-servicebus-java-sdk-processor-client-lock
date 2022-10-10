@@ -37,7 +37,7 @@ public class App {
                 .connectionString(connectionString)
                 .processor()
                 .prefetchCount(10)
-                .queueName("orders")
+                .queueName("demoQueue")
                 .processMessage(processMessage)
                 .processError(processError)
                 .disableAutoComplete()

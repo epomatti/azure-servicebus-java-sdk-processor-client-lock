@@ -16,14 +16,20 @@ Set an environment variable with your connection string:
 export CONNECTION_STRING="Endpoint=sb://{NAMESPACE_NAME}.servicebus.windows.net/;SharedAccessKeyName={KEY_NAME};SharedAccessKey={ACCESS_KEY}="
 ```
 
+Start the app by running Maven or on your favorite IDE:
+
 ```sh
 mvn install
 mvn exec:java
 ```
 
-### Create Service Bus
+To test it, add messages to the queue using the Service Bus web explorer. When the value set on `.prefetchCount(int:)` is set, the service bus processor get's stuck at some point when receiving messages.
 
-Shorthand commands to create a SB namespace and get the root connection string:
+The log level can be set in the `logback.xml` file.
+
+#### Code snippet: create a Service Bus instance
+
+Shorthand commands to create a Service Bus namespace and get the root connection string:
 
 ```sh
 location="eastus2"

@@ -19,8 +19,8 @@ public class App {
 
         Consumer<ServiceBusReceivedMessageContext> processMessage = messageContext -> {
             try {
-                messageContext.getMessage().getBody().toString();
-
+                var payload = messageContext.getMessage().getBody().toString();
+                logger.info(String.format("Message payload received: %s", payload));
                 messageContext.complete();
             } catch (Exception ex) {
                 messageContext.abandon();

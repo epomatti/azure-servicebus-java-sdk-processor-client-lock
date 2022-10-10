@@ -37,7 +37,8 @@ public class App {
         ServiceBusProcessorClient processorClient = new ServiceBusClientBuilder()
                 .connectionString(connectionString)
                 .processor()
-                .prefetchCount(10)
+                .prefetchCount(20)
+                .maxConcurrentCalls(5)
                 .queueName(queueName)
                 .processMessage(processMessage)
                 .processError(processError)
@@ -47,5 +48,8 @@ public class App {
         processorClient.start();
 
         logger.info("Service Bus client started.");
+
+        // Adds a hook to close the Service Bus processor on shutdown
+        Runtime.getRuntime().addShutdownHook(new ShutdownThread(processorClient));
     }
 }

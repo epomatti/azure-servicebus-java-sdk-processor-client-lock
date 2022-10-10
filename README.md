@@ -42,7 +42,7 @@ Caused by: java.lang.IllegalStateException: Cannot perform operations on a dispo
 ERROR c.a.m.s.LockRenewalOperation - {"az.sdk.message":"Error occurred while renewing lock token.","exception":"The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue. For more information please see https://aka.ms/ServiceBusExceptions ....
 
 18:26:18.845 [reactor-executor-1] ERROR reactor.core.publisher.Operators - Operator called default onErrorDropped
-``
+```
 
 The log level can be set in the `logback.xml` file.
 

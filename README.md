@@ -9,8 +9,8 @@ Isolated code sample to simulate the issue below where a processor client gets s
 Requirements:
 
 - JDK 17
-- Latest Maven (must be compatible with Java 17)
-- Service Bus namespace with a Queue
+- Latest Maven
+- Service Bus namespace with a queue
 
 Set an environment variable with your connection string:
 

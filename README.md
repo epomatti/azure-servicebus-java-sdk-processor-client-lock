@@ -26,7 +26,8 @@ mvn install
 mvn exec:java
 ```
 
-I was able to simulate it with various combinations, this is one is currently set up in the code:
+I was able to simulate it with various combinations. This is the one currently set up in the code:
+
 - Prefetch count: `100`
 - Max concurrent calls: `100`
 

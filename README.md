@@ -16,6 +16,7 @@ Set an environment variable with your connection string:
 
 ```sh
 export CONNECTION_STRING="Endpoint=sb://{NAMESPACE_NAME}.servicebus.windows.net/;SharedAccessKeyName={KEY_NAME};SharedAccessKey={ACCESS_KEY}="
+export QUEUE_NAME="demoQueue"
 ```
 
 Start the app by running Maven or on your favorite IDE:

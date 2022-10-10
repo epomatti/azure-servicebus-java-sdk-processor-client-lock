@@ -32,12 +32,13 @@ public class App {
         };
 
         String connectionString = System.getenv("CONNECTION_STRING");
+        String queueName = System.getenv("QUEUE_NAME");
 
         ServiceBusProcessorClient processorClient = new ServiceBusClientBuilder()
                 .connectionString(connectionString)
                 .processor()
                 .prefetchCount(10)
-                .queueName("demoQueue")
+                .queueName(queueName)
                 .processMessage(processMessage)
                 .processError(processError)
                 .disableAutoComplete()

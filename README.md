@@ -4,6 +4,14 @@ Isolated code sample to simulate the issue below where a processor client gets s
 
 - https://github.com/Azure/azure-sdk-for-java/issues/31356
 
+
+✅ The workaround is to have a larger bound elastic size. Check https://github.com/Azure/azure-sdk-for-java/issues/30483 for details on the solution.
+
+```sh
+# Must be greater than "maxConcurrentCalls"
+mvn exec:java -Dreactor.schedulers.defaultBoundedElasticSize=200
+```
+
 ## Running the code
 
 Requirements:
